@@ -1,5 +1,6 @@
 package com.piusdev.websocket_scarlet
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.piusdev.websocket_scarlet.source.ws.WebSocketRepository
@@ -17,6 +18,7 @@ class WsViewModel @Inject constructor(private val webSocketRepository: WebSocket
     fun startListening() {
         viewModelScope.launch {
             webSocketRepository.startListening().collect {
+                Log.d("WsViewModel", "Received message: $it")
                 _messages.value = it
             }
         }

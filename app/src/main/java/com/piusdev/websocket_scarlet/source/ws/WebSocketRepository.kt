@@ -9,6 +9,7 @@ import javax.inject.Singleton
 class WebSocketRepository @Inject constructor(private val webSocketService: WsService) {
     fun startListening() = flow {
         webSocketService.observeMessages().collect {
+            Log.d("WebSocketRepository", "Received message: $it")
             emit(it)
         }
     }

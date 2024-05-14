@@ -48,11 +48,11 @@ object AppModule {
         gson: Gson
     ): Scarlet {
         return Scarlet.Builder()
-            .backoffStrategy(LinearBackoffStrategy(1000))
             .lifecycle(AndroidLifecycle.ofApplicationForeground(app))
+            .webSocketFactory(okHttpClient.newWebSocketFactory("wss://ais-websocket-broadcaster-dev-srvcu3razq-du.a.run.app/"))
+            .backoffStrategy(LinearBackoffStrategy(1000))
             .addStreamAdapterFactory(FlowStreamAdapter.Factory)
             .addMessageAdapterFactory(CustomGsonMessageAdapter.Factory(gson))
-            .webSocketFactory(okHttpClient.newWebSocketFactory("wss://ais-websocket-broadcaster-dev-srvcu3razq-du.a.run.app/"))
             .build()
     }
 }

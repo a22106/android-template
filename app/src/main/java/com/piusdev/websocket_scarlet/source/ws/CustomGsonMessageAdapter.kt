@@ -1,5 +1,6 @@
 package com.piusdev.websocket_scarlet.source.ws
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.piusdev.websocket_scarlet.source.ws.model.AisMessage
@@ -13,6 +14,7 @@ class CustomGsonMessageAdapter<T> private constructor(
     val gson: Gson
 ) : MessageAdapter<T> {
     override fun fromMessage(message: Message): T {
+        Log.d("CustomGsonMessageAdapter", "fromMessage: $message")
         val stringValue = when (message) { // Message is from the WebSocket Stream
             is Message.Text -> message.value
             is Message.Bytes -> message.value.toString()
