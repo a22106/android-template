@@ -1,19 +1,19 @@
 package com.piusdev.websocket_scarlet.source.ws
 
 import android.util.Log
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class WebSocketRepository @Inject constructor(private val webSocketService: WsService) {
-    suspend fun startListening(){
+    fun startListening() = flow {
         webSocketService.observeMessages().collect {
-            Log.d("WebSocketRepository", "startListening: $it")
+            emit(it)
         }
     }
 
     fun observeEvents() = webSocketService.observeEvents()
 
     fun sendLatLon(latLon: String) = webSocketService.sendLatLon(latLon)
-
 }
