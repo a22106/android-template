@@ -1,10 +1,8 @@
 package com.piusdev.websocket_scarlet.source.ws
 
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.piusdev.websocket_scarlet.source.ws.model.AisMessage
-import com.piusdev.websocket_scarlet.source.ws.model.BaseModel
 import com.piusdev.websocket_scarlet.source.ws.model.WsRequestModel
 import com.tinder.scarlet.Message
 import com.tinder.scarlet.MessageAdapter
@@ -42,4 +40,10 @@ class CustomGsonMessageAdapter<T> private constructor(
             return CustomGsonMessageAdapter<Any>(gson)
         }
     }
+}
+
+fun main(){
+    val customGsonMessageAdapter = CustomGsonMessageAdapter.Factory(Gson())
+    val messageAdapter = customGsonMessageAdapter.create(AisMessage::class.java, arrayOf())
+    val message = messageAdapter.fromMessage(Message.Text("{\"mmsi\": 123456789}"))
 }
