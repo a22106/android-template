@@ -1,12 +1,12 @@
-package com.piusdev.websocket_scarlet.di
+package com.piusdev.websocket_scarlet.phillip.di
 
 import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
-import com.piusdev.websocket_scarlet.source.ws.CustomGsonMessageAdapter
-import com.piusdev.websocket_scarlet.source.ws.FlowStreamAdapter
-import com.piusdev.websocket_scarlet.source.ws.WsApi
-import com.piusdev.websocket_scarlet.util.DispatcherProvider
+import com.piusdev.websocket_scarlet.phillip.ws.CustomGsonMessageAdapter
+import com.piusdev.websocket_scarlet.phillip.ws.FlowStreamAdapter
+import com.piusdev.websocket_scarlet.phillip.ws.WsApi
+import com.piusdev.websocket_scarlet.phillip.util.DispatcherProvider
 import com.tinder.scarlet.Scarlet
 import com.tinder.scarlet.lifecycle.android.AndroidLifecycle
 import com.tinder.scarlet.retry.LinearBackoffStrategy
@@ -28,24 +28,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    @Singleton
-    @Provides
-    fun provideOkHttpClient(clientId: String): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val url = chain.request().url.newBuilder()
-                    .addQueryParameter("client_id", clientId)
-                    .build()
-                val request = chain.request().newBuilder()
-                    .url(url)
-                    .build()
-                chain.proceed(request)
-            }
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
-    }
 
     @Singleton
     @Provides
@@ -75,12 +57,6 @@ object AppModule {
     @Provides
     fun provideGsonInstance(): Gson {
         return Gson()
-    }
-
-    @Singleton
-    @Provides
-    fun provideClientId(@ApplicationContext context: Context): String {
-        return runBlocking { context.dataStore.clientId() }
     }
 
     @Singleton

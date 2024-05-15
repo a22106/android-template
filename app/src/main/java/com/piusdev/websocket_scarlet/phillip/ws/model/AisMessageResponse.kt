@@ -1,7 +1,7 @@
-package com.piusdev.websocket_scarlet.source.ws.model
+package com.piusdev.websocket_scarlet.phillip.ws.model
 
-data class AisMessage (
-    val mmsi: Long,
+data class AisMessageResponse (
+    val mmsi: String,
     val timestamp: Long,
     val ais_nmea: List<String>,
     val ais_decoded: AisDecoded,

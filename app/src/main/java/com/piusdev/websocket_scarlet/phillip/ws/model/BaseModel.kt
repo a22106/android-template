@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet.source.ws.model
+package com.piusdev.websocket_scarlet.phillip.ws.model
 
 abstract class BaseModel(
     val lat: Float,

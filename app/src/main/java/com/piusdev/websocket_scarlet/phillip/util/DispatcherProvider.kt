@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet.util
+package com.piusdev.websocket_scarlet.phillip.util
 
 import kotlinx.coroutines.CoroutineDispatcher
 

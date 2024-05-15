@@ -1,6 +1,7 @@
-package com.piusdev.websocket_scarlet.source.ws
+package com.piusdev.websocket_scarlet.phillip.ws
 
-import com.piusdev.websocket_scarlet.source.ws.model.BaseModel
+import com.piusdev.websocket_scarlet.phillip.ws.model.AisMessageResponse
+import com.piusdev.websocket_scarlet.phillip.ws.model.BaseModel
 import com.tinder.scarlet.WebSocket
 import com.tinder.scarlet.ws.Receive
 import com.tinder.scarlet.ws.Send
@@ -14,5 +15,5 @@ interface WsApi {
     fun sendBaseModel(baseModel: BaseModel): Boolean
 
     @Receive
-    fun observeBaseModels(): Flow<BaseModel>
+    fun observeBaseModels(): Flow<AisMessageResponse>
 }

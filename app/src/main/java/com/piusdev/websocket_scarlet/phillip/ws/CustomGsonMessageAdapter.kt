@@ -1,11 +1,9 @@
-package com.piusdev.websocket_scarlet.source.ws
+package com.piusdev.websocket_scarlet.phillip.ws
 
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.piusdev.websocket_scarlet.source.ws.model.AisMessage
-import com.piusdev.websocket_scarlet.source.ws.model.BaseModel
-import com.piusdev.websocket_scarlet.source.ws.model.WsRequestModel
+import com.piusdev.websocket_scarlet.phillip.ws.model.AisMessageResponse
+import com.piusdev.websocket_scarlet.phillip.ws.model.WsRequestModel
 import com.tinder.scarlet.Message
 import com.tinder.scarlet.MessageAdapter
 import java.lang.reflect.Type
@@ -14,19 +12,21 @@ import java.lang.reflect.Type
 class CustomGsonMessageAdapter<T> private constructor(
     val gson: Gson
 ) : MessageAdapter<T> {
+    // 웹소켓에서 받은 메시지를 T 타입으로 변환
     override fun fromMessage(message: Message): T {
-        val stringValue = when (message) { // Message is from the WebSocket Stream
+        val stringValue = when (message) {
             is Message.Text -> message.value
             is Message.Bytes -> message.value.toString()
         }
 
         val jsonObject = JsonParser.parseString(stringValue).asJsonObject
-        val type = AisMessage::class.java
+        val type = AisMessageResponse::class.java
 
         val obj = gson.fromJson(stringValue, type)
         return obj as T
     }
 
+    // T 타입을 웹소켓으로 보낼 메시지로 변환
     override fun toMessage(data: T): Message { // toMessage is for sending data to the WebSocket Stream
         if (data is WsRequestModel) {
             val latLonString = "${data.lat},${data.lon}"
