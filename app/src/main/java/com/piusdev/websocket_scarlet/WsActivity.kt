@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -63,8 +64,13 @@ fun WebSocketApp(viewModel: WsViewModel = hiltViewModel()) {
 
                 Spacer(Modifier.weight(1f))
 
-                Button(onClick = { viewModel.send("0.0,0.0") }) {
-                    Text("0,0")
+                Row {
+                    Button(onClick = { viewModel.send("0,0") }) {
+                        Text("0,0")
+                    }
+                    Button(onClick = { viewModel.send("29.584414") }) {
+                        Text("29.584414")
+                    }
                 }
             }
         }

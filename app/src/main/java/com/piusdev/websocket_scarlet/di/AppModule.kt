@@ -2,6 +2,7 @@ package com.piusdev.websocket_scarlet.di
 
 import android.app.Application
 import com.google.gson.Gson
+import com.piusdev.websocket_scarlet.source.ws.CustomGsonMessageAdapter
 import com.piusdev.websocket_scarlet.source.ws.FlowStreamAdapter
 import com.piusdev.websocket_scarlet.source.ws.WsService
 import com.tinder.scarlet.Scarlet
@@ -43,13 +44,13 @@ object AppModule {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Singleton
     @Provides
-    fun providesWsApi(okHttpClient: OkHttpClient): Scarlet {
+    fun providesWsApi(okHttpClient: OkHttpClient, gson: Gson): Scarlet {
         return Scarlet.Builder()
 //            .lifecycle(AndroidLifecycle.ofApplicationForeground(app))
-            .webSocketFactory(okHttpClient.newWebSocketFactory("wss://ais-websocket-broadcaster-dev-srvcu3razq-du.a.run.app/"))
+            .webSocketFactory(okHttpClient.newWebSocketFactory("wss://ais-websocket-broadcaster-srvcu3razq-du.a.run.app/"))
             .backoffStrategy(LinearBackoffStrategy(1000))
             .addStreamAdapterFactory(FlowStreamAdapter.Factory)
-            .addMessageAdapterFactory(GsonMessageAdapter.Factory())
+            .addMessageAdapterFactory(CustomGsonMessageAdapter.Factory(gson))
             .build()
     }
 }
