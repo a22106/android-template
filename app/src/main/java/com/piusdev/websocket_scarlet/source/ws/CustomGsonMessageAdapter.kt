@@ -11,7 +11,7 @@ import java.lang.reflect.Type
 
 @Suppress("UNCHECKED_CAST")
 class CustomGsonMessageAdapter<T> private constructor(
-    val gson: Gson
+    private val gson: Gson,
 ) : MessageAdapter<T> {
     override fun fromMessage(message: Message): T {
         Log.d("CustomGsonMessageAdapter", "fromMessage: $message")
@@ -23,7 +23,7 @@ class CustomGsonMessageAdapter<T> private constructor(
         val jsonObject = JsonParser.parseString(stringValue).asJsonObject
         val type = AisMessage::class.java
 
-        val obj = gson.fromJson(stringValue, type)
+        val obj = gson.fromJson(stringValue, AisMessage::class.java)
         return obj as T
     }
 
@@ -32,7 +32,8 @@ class CustomGsonMessageAdapter<T> private constructor(
             val latLonString = "${data.lat},${data.lon}"
             return Message.Text(latLonString)
         }
-        return Message.Text("") // Return empty message if data is not WsRequestModel
+        Log.d("CustomGsonMessageAdapter", "data=${data.toString()}")
+        return Message.Text(data.toString()) // Return empty message if data is not WsRequestModel
     }
 
     class Factory(

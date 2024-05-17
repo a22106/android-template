@@ -1,20 +1,15 @@
 package com.piusdev.websocket_scarlet.source.ws
 
-import android.util.Log
-import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.piusdev.websocket_scarlet.source.ws.model.AisMessage
+import com.tinder.scarlet.WebSocket
+import kotlinx.coroutines.flow.Flow
 
-@Singleton
-class WebSocketRepository @Inject constructor(private val webSocketService: WsService) {
-    fun startListening() = flow {
-        webSocketService.observeMessages().collect {
-            Log.d("WebSocketRepository", "Received message: $it")
-            emit(it)
-        }
-    }
+interface WebSocketRepository {
 
-    fun observeEvents() = webSocketService.observeEvents()
+    fun startListening(): Flow<AisMessage>
 
-    fun sendLatLon(latLon: String) = webSocketService.sendLatLon(latLon)
+    fun observeEvents(): Flow<WebSocket.Event>
+
+    fun sendLatLon(latLon: String): Boolean
+
 }
