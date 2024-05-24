@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet
+package com.piusdev.template
 
 import org.junit.Test
 

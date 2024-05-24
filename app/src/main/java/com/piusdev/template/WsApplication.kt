@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet
+package com.piusdev.template
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet.ui.theme
+package com.piusdev.template.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

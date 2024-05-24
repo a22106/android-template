@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet.ui.theme
+package com.piusdev.template.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

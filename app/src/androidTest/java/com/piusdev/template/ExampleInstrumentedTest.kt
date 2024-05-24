@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet
+package com.piusdev.template
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

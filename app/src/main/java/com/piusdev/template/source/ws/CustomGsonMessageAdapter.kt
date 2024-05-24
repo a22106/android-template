@@ -1,10 +1,10 @@
-package com.piusdev.websocket_scarlet.source.ws
+package com.piusdev.template.source.ws
 
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.JsonParser
-import com.piusdev.websocket_scarlet.source.ws.model.AisMessage
-import com.piusdev.websocket_scarlet.source.ws.model.WsRequestModel
+import com.piusdev.template.source.ws.model.AisMessage
+import com.piusdev.template.source.ws.model.WsRequestModel
 import com.tinder.scarlet.Message
 import com.tinder.scarlet.MessageAdapter
 import java.lang.reflect.Type

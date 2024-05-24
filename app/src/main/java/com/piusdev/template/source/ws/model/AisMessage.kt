@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet.source.ws.model
+package com.piusdev.template.source.ws.model
 
 import com.google.gson.annotations.SerializedName
 

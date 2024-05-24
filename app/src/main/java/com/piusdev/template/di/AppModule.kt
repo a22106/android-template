@@ -1,12 +1,10 @@
-package com.piusdev.websocket_scarlet.di
+package com.piusdev.template.di
 
-import android.app.Application
 import com.google.gson.Gson
-import com.piusdev.websocket_scarlet.source.ws.CustomGsonMessageAdapter
-import com.piusdev.websocket_scarlet.source.ws.FlowStreamAdapter
-import com.piusdev.websocket_scarlet.source.ws.WsService
+import com.piusdev.template.source.ws.CustomGsonMessageAdapter
+import com.piusdev.template.source.ws.FlowStreamAdapter
+import com.piusdev.template.source.ws.WsService
 import com.tinder.scarlet.Scarlet
-import com.tinder.scarlet.messageadapter.gson.GsonMessageAdapter
 import com.tinder.scarlet.retry.LinearBackoffStrategy
 import com.tinder.scarlet.websocket.okhttp.newWebSocketFactory
 import dagger.Module

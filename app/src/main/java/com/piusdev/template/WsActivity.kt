@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet
+package com.piusdev.template
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.piusdev.websocket_scarlet.ui.theme.WebsocketscarletTheme
+import com.piusdev.template.ui.theme.WebsocketscarletTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

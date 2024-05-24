@@ -1,7 +1,7 @@
-package com.piusdev.websocket_scarlet.di
+package com.piusdev.template.di
 
-import com.piusdev.websocket_scarlet.source.ws.WebSocketRepository
-import com.piusdev.websocket_scarlet.source.ws.WebSocketRepositoryImpl
+import com.piusdev.template.source.ws.WebSocketRepository
+import com.piusdev.template.source.ws.WebSocketRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

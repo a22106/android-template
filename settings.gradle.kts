@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "websocket-scarlet"
+rootProject.name = "template"
 include(":app")
  

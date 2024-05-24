@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet.source.ws
+package com.piusdev.template.source.ws
 
 import javax.inject.Inject
 

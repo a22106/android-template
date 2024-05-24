@@ -1,4 +1,4 @@
-package com.piusdev.websocket_scarlet.source.ws
+package com.piusdev.template.source.ws
 
 import com.tinder.scarlet.Stream
 import com.tinder.scarlet.StreamAdapter
