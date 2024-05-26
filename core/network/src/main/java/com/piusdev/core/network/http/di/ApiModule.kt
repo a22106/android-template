@@ -16,6 +16,8 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Call
+import okhttp3.Interceptor
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -48,9 +50,30 @@ object ApiModule {
 
     @Provides
     @Singleton
+    @Named("api")
+    fun provideOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        val authInterceptor = Interceptor { chain ->
+            val newRequest: Request = chain.request().newBuilder()
+                .addHeader("Authorization", "Bearer dev_token")
+                .build()
+            chain.proceed(newRequest)
+        }
+
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(authInterceptor)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideRetrofit(
         networkJson: Json,
-        okHttpClient: OkHttpClient,
+        @Named("api") okHttpClient: OkHttpClient,
         okhttpClientFactory: dagger.Lazy<Call.Factory>
     ): ApiService {
         return Retrofit.Builder()
