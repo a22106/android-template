@@ -1,21 +1,54 @@
+import com.piusdev.convention.TemplateBuildType
+
 plugins {
-//    alias(libs.plugins.ksp)
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.piusdev.template.hilt)
     alias(libs.plugins.piusdev.template.application)
     alias(libs.plugins.piusdev.template.application.compose)
+    alias(libs.plugins.piusdev.template.hilt)
+    id("com.google.android.gms.oss-licenses-plugin")
+    alias(libs.plugins.baselineprofile)
+    alias(libs.plugins.roborazzi)
 }
 
 android {
     namespace = "com.piusdev.template"
+    defaultConfig{
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    buildTypes{
+        debug {
+            applicationIdSuffix = TemplateBuildType.DEBUG.applicationIdSuffix
+        }
+        release {
+            isMinifyEnabled = true
+            applicationIdSuffix = TemplateBuildType.RELEASE.applicationIdSuffix
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.named("debug").get()
+            baselineProfile.automaticGenerationDuringBuild = true
+        }
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
+    // Project modules
+    implementation(projects.feature.temp)
+    // Core modules
+    implementation(projects.core.common)
+    implementation(projects.core.ui)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.data)
+    implementation(projects.core.model)
 
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -32,7 +65,7 @@ dependencies {
     // Lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation(libs.androidx.lifecycle.extensions)
 
     // Coroutine Lifecycle Scopes
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -46,21 +79,20 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    // Gson
     implementation(libs.gson)
 
     // Retrofit
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.okhttp.logging)
     implementation(libs.kotlinx.serialization.json)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    testImplementation(projects.core.testing)
+    testImplementation(libs.hilt.android.testing)
+
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.accompanist.testharness)
+    androidTestImplementation(libs.hilt.android.testing)
 }

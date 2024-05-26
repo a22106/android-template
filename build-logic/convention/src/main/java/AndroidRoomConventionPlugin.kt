@@ -1,4 +1,5 @@
 import androidx.room.gradle.RoomExtension
+import com.google.devtools.ksp.gradle.KspExtension
 import com.piusdev.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -13,6 +14,10 @@ class AndroidRoomConventionPlugin: Plugin<Project> {
                 apply("com.google.devtools.ksp")
             }
 
+            extensions.configure<KspExtension> {
+                arg("room.generateKotlin", "true")
+            }
+
             extensions.configure<RoomExtension> {
                 schemaDirectory("$projectDir/schemas")
             }
@@ -21,8 +26,6 @@ class AndroidRoomConventionPlugin: Plugin<Project> {
                 "implementation"(libs.findLibrary("androidx.room.runtime").get())
                 "implementation"(libs.findLibrary("androidx.room.ktx").get())
                 "ksp"(libs.findLibrary("androidx.room.compiler").get())
-                "implementation"(libs.findLibrary("androidx.room.ktx").get())
-                "implementation"(libs.findLibrary("androidx.room.common").get())
             }
         }
     }
