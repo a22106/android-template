@@ -14,6 +14,7 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindsRepository(impl: WebSocketRepositoryImpl): WebSocketRepository
-
+    abstract fun bindsRepository(
+        impl: WebSocketRepositoryImpl
+    ): WebSocketRepository
 }

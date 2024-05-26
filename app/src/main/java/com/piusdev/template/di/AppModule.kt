@@ -3,6 +3,8 @@ package com.piusdev.template.di
 import com.google.gson.Gson
 import com.piusdev.template.source.ws.CustomGsonMessageAdapter
 import com.piusdev.template.source.ws.FlowStreamAdapter
+import com.piusdev.template.source.ws.WebSocketRepository
+import com.piusdev.template.source.ws.WebSocketRepositoryImpl
 import com.piusdev.template.source.ws.WsService
 import com.tinder.scarlet.Scarlet
 import com.tinder.scarlet.retry.LinearBackoffStrategy

@@ -38,15 +38,10 @@ class WsActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-    )
-}
-
-@Composable
 fun WebSocketApp(viewModel: WsViewModel = hiltViewModel()) {
+    val response by viewModel.apiResponse.collectAsState()
+//    val scaffoldState = rememberScaffoldState()
+
     WebsocketscarletTheme {
         Surface(
             modifier = Modifier
@@ -55,32 +50,30 @@ fun WebSocketApp(viewModel: WsViewModel = hiltViewModel()) {
                 .fillMaxSize()
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Button(onClick = { viewModel.startListening() }) {
-                    Text("Start Listening")
-                }
-
-                val messages by viewModel.messages.collectAsState()
-                Text(text = messages)
-
-                Spacer(Modifier.weight(1f))
-
-                Row {
-                    Button(onClick = { viewModel.send("0,0") }) {
-                        Text("0,0")
-                    }
-                    Button(onClick = { viewModel.send("29.584414") }) {
-                        Text("29.584414")
-                    }
-                }
+                WebSocketTest(viewModel)
+//                ApiGetTest(viewModel)
             }
+        }
+    }
+}
+
+@Composable
+private fun WebSocketTest(viewModel: WsViewModel) {
+    Button(onClick = { viewModel.startListening() }) {
+        Text("Start Listening")
+    }
+    val messages by viewModel.messages.collectAsState()
+    Text(text = messages)
+    Spacer(modifier = Modifier.padding(8.dp))
+    Row {
+        Button(onClick = { viewModel.send("0,0") }) {
+            Text("0,0")
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    WebsocketscarletTheme {
-        Greeting("Android")
-    }
+fun DefaultPreview() {
+    WebSocketApp()
 }
