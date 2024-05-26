@@ -1,4 +1,4 @@
-package com.piusdev.core.network.ws
+package com.piusdev.core.network.ws.repository
 
 import com.piusdev.core.network.ws.model.AisMessage
 import com.tinder.scarlet.WebSocket

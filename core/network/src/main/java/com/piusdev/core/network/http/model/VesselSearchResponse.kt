@@ -1,14 +1,6 @@
-@file:Suppress("PLUGIN_IS_NOT_ENABLED")
-
-package com.piusdev.core.network
+package com.piusdev.core.network.http.model
 
 import kotlinx.serialization.Serializable
-import retrofit2.http.GET
-
-interface ApiService {
-    @GET("v1/vessels/search")
-    suspend fun getVessels(): VesselSearchResponse
-}
 
 @Serializable
 data class VesselSearchResponse(

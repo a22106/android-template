@@ -70,6 +70,13 @@ private fun WebSocketTest(viewModel: WsViewModel) {
             Text("0,0")
         }
     }
+    // api request and response
+    Button(onClick = { viewModel.getVessels() }) {
+        Text("Get Vessels")
+    }
+    val response by viewModel.apiResponse.collectAsState()
+    Text(text = response ?: "No response")
+
 }
 
 @Preview(showBackground = true)

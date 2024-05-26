@@ -1,6 +1,8 @@
-package com.piusdev.core.network.di
+package com.piusdev.core.network.ws.di
 
+import androidx.tracing.trace
 import com.google.gson.Gson
+import com.piusdev.core.network.BuildConfig
 import com.piusdev.core.network.ws.CustomGsonMessageAdapter
 import com.piusdev.core.network.ws.FlowStreamAdapter
 import com.piusdev.core.network.ws.WsService
@@ -12,6 +14,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.serialization.json.Json
+import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
@@ -19,6 +23,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+
     @Provides
     @Singleton
     fun provideGsonInstance(): Gson {
@@ -32,6 +38,8 @@ object AppModule {
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
             .build()
     }
+
+    // WebSocket
 
     @Provides
     @Singleton

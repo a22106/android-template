@@ -1,5 +1,6 @@
-package com.piusdev.core.network.ws
+package com.piusdev.core.network.ws.repository
 
+import com.piusdev.core.network.ws.WsService
 import javax.inject.Inject
 
 class WebSocketRepositoryImpl @Inject constructor(

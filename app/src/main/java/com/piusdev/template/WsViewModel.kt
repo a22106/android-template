@@ -3,8 +3,9 @@ package com.piusdev.template
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.piusdev.core.network.repository.ApiRepository
-import com.piusdev.core.network.ws.WebSocketRepository
+import com.piusdev.core.network.http.repository.ApiRepository
+import com.piusdev.core.network.http.repository.ApiRepositoryImpl
+import com.piusdev.core.network.ws.repository.WebSocketRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

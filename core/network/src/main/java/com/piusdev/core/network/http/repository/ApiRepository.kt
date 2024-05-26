@@ -1,6 +1,6 @@
-package com.piusdev.core.network.repository
+package com.piusdev.core.network.http.repository
 
-import com.piusdev.core.network.VesselSearchResponse
+import com.piusdev.core.network.http.model.VesselSearchResponse
 import kotlinx.coroutines.flow.Flow
 
 interface ApiRepository {
