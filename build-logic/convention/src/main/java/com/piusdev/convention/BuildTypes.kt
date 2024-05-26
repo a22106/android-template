@@ -16,18 +16,17 @@ internal fun Project.configureBuildTypes(
         buildFeatures{
             buildConfig = true
         }
-        val mapseaApiUrl = gradleLocalProperties(rootDir, providers = project.providers).getProperty("MAPSEA_API_URL")
-        val navigationApiUrl = gradleLocalProperties(rootDir, providers = project.providers).getProperty("NAVIGATION_API_URL")
+        val tempApiUrl = gradleLocalProperties(rootDir, providers = project.providers).getProperty("API_URL")
         when(extensionType){
             // Android 애플리케이션 모듈을 위한 설정. 서명 구성(signing configurations), ProGuard 설정, 빌드 타입(build types) 등
             ExtensionType.APPLICATION -> {
                 extensions.configure<ApplicationExtension> {
                     buildTypes {
                         debug {
-                            configureDebugBuildType(mapseaApiUrl, navigationApiUrl)
+                            configureDebugBuildType(tempApiUrl)
                         }
                         release {
-                            configureReleaseBuildType(commonExtension, mapseaApiUrl, navigationApiUrl)
+                            configureReleaseBuildType(commonExtension, tempApiUrl)
                         }
                     }
                 }
@@ -37,10 +36,10 @@ internal fun Project.configureBuildTypes(
                 extensions.configure<LibraryExtension> {
                     buildTypes {
                         debug {
-                            configureDebugBuildType(mapseaApiUrl, navigationApiUrl)
+                            configureDebugBuildType(tempApiUrl)
                         }
                         release {
-                            configureReleaseBuildType(commonExtension, mapseaApiUrl, navigationApiUrl)
+                            configureReleaseBuildType(commonExtension, tempApiUrl)
                         }
                     }
                 }
@@ -50,27 +49,17 @@ internal fun Project.configureBuildTypes(
 }
 
 private fun BuildType.configureDebugBuildType(
-    baseUrl: String,
-    navigationApiUrl: String){
-    buildConfigField("String", "MAPSEA_API_URL", "\"$baseUrl\"")
-    buildConfigField("String", "NAVIGATION_API_URL", "\"$navigationApiUrl\"")
+    apiUrl: String){
+    buildConfigField("String", "API_URL", "\"$apiUrl\"")
     buildConfigField("String", "BASE_ENC_URL", "\"enc_http_dev\"")
-    buildConfigField("String", "ENC_TCP", "\"enc_server_dev\"")
-    buildConfigField("String", "WEBSOCKET", "\"ais_socket_dev\"")
-    buildConfigField("Integer", "WS_UPDATE_INTERVAL", "3000")
 }
 
 private fun BuildType.configureReleaseBuildType(
     commonExtension: CommonExtension<*, *, *, *, *, *>,
     baseUrl: String,
-    navigationApiUrl: String
 ){
-    buildConfigField("String", "MAPSEA_API_URL", "\"$baseUrl\"")
-    buildConfigField("String", "NAVIGATION_API_URL", "\"$navigationApiUrl\"")
+    buildConfigField("String", "API_URL", "\"$baseUrl\"")
     buildConfigField("String", "BASE_ENC_URL", "\"enc_http\"")
-    buildConfigField("String", "ENC_TCP", "\"enc_server\"")
-    buildConfigField("String", "WEBSOCKET", "\"ais_socket\"")
-    buildConfigField("Integer", "WS_UPDATE_INTERVAL", "800")
 
     isMinifyEnabled = false // 코드 난독화
     isShrinkResources = false // 리소스 축소

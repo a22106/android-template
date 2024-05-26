@@ -23,9 +23,33 @@ gradlePlugin {
             id = "piusdev.template.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
+        register("androidLibrary") {
+            id = "piusdev.template.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidLibraryCompose") {
+            id = "piusdev.template.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
         register("androidHilt"){
             id = "piusdev.template.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("androidFeatureUi") {
+            id = "piusdev.template.feature.ui"
+            implementationClass = "AndroidFeatureUiConventionPlugin"
+        }
+        register("androidRoom"){
+            id = "piusdev.template.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
+        register("jvmLibrary") {
+            id = "piusdev.template.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
+        register("jvmKtor") {
+            id = "piusdev.template.jvm.ktor"
+            implementationClass = "JvmKtorConventionPlugin"
         }
     }
 }

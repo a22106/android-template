@@ -5,7 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.piusdev.core.network"
+    namespace = "com.piusdev.core.data"
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 dependencies {
