@@ -1,16 +1,25 @@
-package com.piusdev.template
+package com.piusdev.feature.temp
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.piusdev.core.network.http.model.VesselSearchResponse
 import com.piusdev.core.network.http.repository.ApiRepository
-import com.piusdev.core.network.http.repository.ApiRepositoryImpl
 import com.piusdev.core.network.ws.repository.WebSocketRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+sealed interface ApiUiState {
+    object Loading : ApiUiState
+    data class Success(val data: VesselSearchResponse) : ApiUiState
+    data class Error(val message: String) : ApiUiState
+}
 
 @HiltViewModel
 class WsViewModel @Inject constructor(
@@ -21,17 +30,31 @@ class WsViewModel @Inject constructor(
     private val _messages = MutableStateFlow("No Message")
     val messages: StateFlow<String> = _messages
 
-    private val _apiResponse = MutableStateFlow<String?>(null)
-    val apiResponse: StateFlow<String?> = _apiResponse
+    private val _apiState = MutableStateFlow<ApiUiState>(ApiUiState.Loading)
+    val apiState: StateFlow<ApiUiState> = _apiState
 
     // get data from api
-    fun getVessels() {
+    fun getVessels(
+        apiToken: String,
+        mmsi: String? = null,
+        imo: String? = null,
+        shipname: String? = null,
+        callsign: String? = null) {
         viewModelScope.launch {
-            apiRepository.getVesselsSearch().collect {result ->
+            _apiState.value = ApiUiState.Loading
+            apiRepository.getVesselsSearch(
+                apiToken = apiToken,
+                mmsi = mmsi,
+                imo = imo,
+                shipname = shipname,
+                callsign = callsign
+            ).collect { result ->
                 result.onSuccess {
-                    _apiResponse.value = it.content.vessels.toString()
+                    Log.d("WsViewModel", "getVessels success: ${it.content.vessels}")
+                    _apiState.value = ApiUiState.Success(it)
                 }.onFailure {
-                    _apiResponse.value = "Error: ${it.message}"
+                    Log.e("WsViewModel", "getVessels error", it)
+                    _apiState.value = ApiUiState.Error(it.message ?: "Unknown Error")
                 }
             }
         }

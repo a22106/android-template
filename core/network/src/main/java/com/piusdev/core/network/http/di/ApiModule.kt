@@ -1,5 +1,6 @@
 package com.piusdev.core.network.http.di
 
+import android.util.Log
 import androidx.tracing.trace
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.piusdev.core.network.BuildConfig
@@ -53,19 +54,15 @@ object ApiModule {
     @Named("api")
     fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-
-        val authInterceptor = Interceptor { chain ->
-            val newRequest: Request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer dev_token")
-                .build()
-            chain.proceed(newRequest)
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
         }
 
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(authInterceptor)
             .build()
     }
 

@@ -16,6 +16,11 @@ internal class RetrofitTemplateNetwork @Inject constructor(
 ): TemplateNetworkDataSource {
     private val retrofitApi = trace("ApiService") { apiService }
 
-    override suspend fun getSearchVessel(mmsi: String?): VesselSearchResponse =
-        retrofitApi.searchVessels(mmsi = mmsi)
+    override suspend fun getSearchVessel(
+        apiToken: String,
+        mmsi: String?): VesselSearchResponse =
+        retrofitApi.searchVessels(
+            apiToken = apiToken,
+            mmsi = mmsi
+        )
 }
