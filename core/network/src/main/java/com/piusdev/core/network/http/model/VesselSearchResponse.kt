@@ -15,7 +15,7 @@ data class Content(
     val number: Int,
     val totalPages: Int,
     val totalElements: Int,
-    val numberOfElement: Int,
+    val numberOfElements: Int,
     val first: Boolean,
     val last: Boolean,
     val empty: Boolean
