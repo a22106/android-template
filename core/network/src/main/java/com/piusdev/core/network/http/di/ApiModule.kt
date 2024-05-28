@@ -1,14 +1,10 @@
 package com.piusdev.core.network.http.di
 
-import android.util.Log
 import androidx.tracing.trace
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.piusdev.core.network.BuildConfig
 import com.piusdev.core.network.http.ApiService
-import com.piusdev.core.network.http.repository.ApiRepository
-import com.piusdev.core.network.http.repository.ApiRepositoryImpl
-import com.piusdev.core.network.ws.di.AppModule_ProvideOkhttpClientFactory
-import dagger.Binds
+import com.piusdev.core.network.http.model.ApiErrorResponse
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,12 +14,38 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Call
 import okhttp3.Interceptor
-import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
+
+class ApiErrorInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val response = chain.proceed(chain.request())
+        if (!response.isSuccessful) {
+            response.body?.let { responseBody ->
+                val errorBody = responseBody.string()
+                val apiErrorResponse = try {
+                    Json.decodeFromString<ApiErrorResponse>(errorBody)
+                } catch (e: Exception) {
+                    ApiErrorResponse(
+                        statusCode = response.code,
+                        description = "Unknown Error",
+                        message = "Unknown Error",
+                        code = "unknown_error"
+                    )
+                }
+                throw ApiException(apiErrorResponse)
+            }
+        }
+        return response
+    }
+}
+
+class ApiException(val errorResponse: ApiErrorResponse) : Exception(errorResponse.description)
 
 @Module
 @InstallIn(SingletonComponent::class)
