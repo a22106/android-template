@@ -1,5 +1,6 @@
 package com.piusdev.core.network.http.di
 
+import android.util.Log
 import androidx.tracing.trace
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.piusdev.core.network.BuildConfig
